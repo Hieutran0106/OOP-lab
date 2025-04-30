@@ -1,0 +1,36 @@
+Programming with AWT and Swing is quite similar (similar elements including container/components, and 
+event-handling). However, there are some differences that you need to note:
+o Compare the top-level containers in Swing and AWT
+o Compare the class name of components in AWT and the corresponding class’s name in Swing
+o Compare the event-handling of Swing and AWT applications
+The resulting appearances of the applications developed using Swing and AWT might be different as well. 
+Make comparisons.
+1. Các Container Cấp Cao:
+- AWT:
++ Frame: Là container cấp cao chính trong ứng dụng AWT. Frame là một thành phần nặng (heavyweight), đại diện cho cửa sổ chính của ứng dụng. Nó có thể chứa menu, nút bấm, ô nhập văn bản và các thành phần khác. Đây là điểm khởi đầu phổ biến cho các ứng dụng AWT.
+
++ Applet: Dùng để tạo các applet chạy trong trình duyệt web.
+
++ Window: Lớp Window trong AWT cũng là một container cấp cao, nhưng không có thanh tiêu đề, viền hoặc thanh menu như Frame. Nó thường được dùng để tạo các cửa sổ phụ hoặc hộp thoại trong ứng dụng.
+- Swing:
++ JFrame: Là container cấp cao chính trong ứng dụng Swing. Đây là một container nhẹ (lightweight), đại diện cho cửa sổ cấp cao với các yếu tố như thanh tiêu đề, viền, và có thể có thanh menu. JFrame hỗ trợ các thành phần Swing và cho phép tùy biến giao diện thông qua cơ chế pluggable look and feel.
+
++ JDialog: Là phần mở rộng của java.awt.Dialog, dùng để tạo các hộp thoại bật lên để tương tác với người dùng hoặc hiển thị thông báo. JDialog tương tự như Window trong AWT nhưng mạnh mẽ hơn nhờ hỗ trợ các thành phần Swing và các tính năng chuyên biệt cho hộp thoại.
+
++ JApplet: Là phần mở rộng của java.applet.Applet, dùng để tạo các applet trong Swing với giao diện và chức năng mở rộng hơn so với AWT
+
+ 2.Tên Lớp Thành Phần:
+-Với AWT: Không có tiền tố J ở trước(Label, Button, TextField,...).
+-Với Swing: Có tiền tố J ở phía trước (JTextField,JLabel,JButton,...).
+
+3.Xử Lý Sự Kiện:
+Trong AWT, cơ chế xử lý sự kiện được xây dựng theo mô hình ủy quyền (Delegation Event Model), nghĩa là các sự kiện từ người dùng sẽ được ủy quyền cho các đối tượng lắng nghe sự kiện (listener). Mỗi thành phần giao diện trong AWT đều đi kèm với các giao diện listener tương ứng, chẳng hạn như ActionListener hoặc MouseListener, cho phép gán các đối tượng để xử lý các loại sự kiện cụ thể. Lập trình viên thường sử dụng lớp ẩn danh nội bộ (anonymous inner class) để định nghĩa nhanh các listener, giúp mã ngắn gọn hơn, tuy nhiên cách làm này có thể gây khó khăn trong việc đọc và bảo trì mã trong các ứng dụng lớn. Ngoài ra, AWT chỉ sử dụng một luồng duy nhất để xử lý giao diện người dùng (Event Dispatch Thread – EDT), nên nếu thực hiện các tác vụ nặng trong luồng này sẽ dễ khiến giao diện bị treo hoặc phản hồi chậm.
+
+Swing cũng áp dụng mô hình listener tương tự như AWT, cho phép gán các đối tượng lắng nghe vào thành phần giao diện để xử lý các sự kiện cụ thể như chuột, bàn phím hay hành động. Tuy nhiên, Swing cung cấp nhiều lựa chọn linh hoạt hơn trong việc cài đặt listener, bao gồm việc dùng lớp riêng biệt hoặc biểu thức lambda (từ Java 8 trở đi), giúp mã nguồn trở nên rõ ràng và dễ bảo trì hơn. Về mặt xử lý đồng thời, Swing đặt ra yêu cầu cao hơn: mọi cập nhật giao diện và xử lý sự kiện đều phải được thực hiện trong EDT để đảm bảo sự ổn định của ứng dụng. Để hỗ trợ việc này, Swing cung cấp các công cụ như SwingUtilities.invokeLater() và SwingWorker để xử lý các tác vụ nền mà không làm ảnh hưởng đến giao diện chính. Ngoài ra, Swing còn hỗ trợ tạo sự kiện và listener tùy chỉnh, mang đến khả năng mở rộng linh hoạt. Cuối cùng, nhờ vào kiến trúc giao diện có thể cắm (pluggable look and feel), Swing cho phép tùy chỉnh không chỉ giao diện mà còn cả hành vi của các thành phần GUI, bao gồm cả cách xử lý sự kiện, độc lập với hệ điều hành nền tảng.
+
+4. Diện và Trình Bày:
+AWT (Abstract Window Toolkit):
+AWT sử dụng các thành phần giao diện gốc của hệ điều hành (native components), có nghĩa là giao diện sẽ khác nhau giữa các nền tảng. Mặc dù AWT cung cấp các thành phần cơ bản như Button, TextField, và Label, nhưng nó không hỗ trợ tùy chỉnh giao diện (Look and Feel). Điều này khiến giao diện AWT không linh hoạt và bị hạn chế theo phong cách của hệ điều hành. Hơn nữa, AWT sử dụng mô hình ủy quyền sự kiện, và các listener thường được cài đặt qua lớp ẩn danh nội bộ, điều này có thể khiến mã trở nên khó đọc và khó bảo trì trong các ứng dụng lớn.
+
+Swing:
+Swing là một bộ công cụ giao diện người dùng (GUI) mạnh mẽ hơn, sử dụng các thành phần lightweight tự vẽ bằng Java, vì vậy giao diện của ứng dụng Swing sẽ giống nhau trên mọi nền tảng, không bị ảnh hưởng bởi hệ điều hành. Swing hỗ trợ tùy chỉnh giao diện (Look and Feel) thông qua UIManager, cho phép thay đổi giao diện ứng dụng linh hoạt, chẳng hạn như giao diện Metal hoặc Nimbus. Ngoài ra, Swing cung cấp các thành phần giao diện nâng cao như JTable, JTree, và JComboBox. Swing cũng hỗ trợ các cách tiếp cận hiện đại hơn trong việc xử lý sự kiện, như sử dụng lambda expressions, giúp mã nguồn trở nên rõ ràng và dễ bảo trì hơn.
